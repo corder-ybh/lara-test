@@ -22,7 +22,7 @@ Route::put('articles/{article}', 'ArticleController@update');
 Route::delete('articles/{article}', 'ArticleController@delete');
 
 Route::post('register', 'Admin\RegisterController@register');
-Route::post('login', 'Admin\LoginController@login');
+Route::post('login', 'Auth\LoginController@login');
 
 //响应foo所有的请求
 Route::match(['get','post'], 'foo', function (){
