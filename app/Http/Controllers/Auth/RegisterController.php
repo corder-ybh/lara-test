@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -66,7 +66,9 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+//            'password' => Hash::make($data['password']),
+            //在user模型中新增修改器方法以便在保持时对密码字段进行加密处理
+            'password' => $data['password'],
         ]);
     }
 }
