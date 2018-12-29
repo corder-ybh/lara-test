@@ -2,36 +2,28 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    protected $table = 'users';
-    protected $primaryKey = 'id';
-    public $timestamps = false;
+    use Notifiable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'id',
-        'name',
-        'email',
-        'password',
-        'enable',
-        'is_admin',
-        'description',
-        'head_image',
-        'remember_token',
-        'last_login_at',
-        'create_at',
-        'updated_at',
-        'phone',
-        'api_token'
+        'name', 'email', 'password',
     ];
 
-    public function generateToken()
-    {
-        $this->api_token = str_random(60);
-        $this->save();
-
-        return $this->api_token;
-    }
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }

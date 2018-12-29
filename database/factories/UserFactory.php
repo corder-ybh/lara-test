@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
-| Models Factories
+| Model Factories
 |--------------------------------------------------------------------------
 |
 | This directory should contain each of the model factory definitions for

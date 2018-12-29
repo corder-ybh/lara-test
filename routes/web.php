@@ -11,20 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-//Route::get('/index', 'IndexController@index');
-//Route::get('article/index', 'ArticleController@index');
-//Route::get('article/add', 'ArticleController@add');
-//Route::get('article/delete', 'ArticleController@delete');
-//Route::get('article/edit', 'ArticleController@edit');
-
-Route::group(['middleware' => ['web']],function(){
-    Route::get('/',function (){
-        return view('welcome');
-    });
-    Route::get('admin/login', 'Admin\PublicController@login');
-    Route::post('admin/check', 'Admin\PublicController@check');
-    Route::get('admin/index', 'Admin\IndexController@index');
+Route::get('/', function () {
+    return view('welcome');
 });
