@@ -24,6 +24,7 @@ Route::get('/', 'PostController@index')->name('home');
 Route::resource('posts', 'PostController');
 Route::resource('users', 'UserController');
 Route::resource('permissions', 'PermissionController');
+Route::resource('roles', 'RoleController');
 //资源控制器处理的动作
 //
 //请求方式	URI路径	控制器方法	路由名称

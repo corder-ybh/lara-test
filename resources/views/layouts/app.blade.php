@@ -50,6 +50,9 @@
                     @if (!Auth::guest())
                         <li><a href="{{ route('posts.create') }}">New Article</a></li>
                     @endif
+                    @if (!Auth::guest())
+                        <li><a href="{{ route('users.index') }}">用户列表</a></li>
+                    @endif
                 </ul>
 
                 <!-- 导航条右边 -->
