@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
@@ -8,6 +8,7 @@ use Auth;
 //引入laravel-permission 模型
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Controller;
 
 use Session;
 
@@ -16,7 +17,7 @@ class RoleController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'isAdmin']); //isAdmin中间件只让具备指定权限的用户才能访问该资源
+        $this->middleware(['auth', 'clearance']); //isAdmin中间件只让具备指定权限的用户才能访问该资源
     }
 
     /**
@@ -27,7 +28,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();  //获取所有角色
-        return view('roles.index')->with('roles', $roles);
+        return view('auth.role.index')->with('roles', $roles);
     }
 
     /**
@@ -39,7 +40,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();  //获取所有权限
 
-        return view('roles.create', ['permissions' => $permissions]);
+        return view('auth.role.create', ['permissions' => $permissions]);
     }
 
     /**
@@ -50,7 +51,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //验证 name 和 permissions 字段
+        //验证 name 和 permission 字段
         $this->validate($request, [
                 'name' => 'required|unique:roles|max:10',
                 'permissions' => 'required',
@@ -72,7 +73,7 @@ class RoleController extends Controller
             $role->givePermissionTo($p);
         }
 
-        return redirect()->route('roles.index')
+        return redirect()->route('auth.role.index')
             ->with('flash_message',
                 'Role' . $role->name . ' added!');
     }
@@ -85,7 +86,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return redirect('roles');
+        return redirect('role');
     }
 
     /**
@@ -99,7 +100,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
-        return view('roles.edit', compact('role', 'permissions'));
+        return view('auth.role.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -133,7 +134,7 @@ class RoleController extends Controller
             $role->givePermissionTo($p);  // 分配权限到角色
         }
 
-        return redirect()->route('roles.index')
+        return redirect()->route('auth.role.index')
             ->with('flash_message',
                 'Role' . $role->name . ' updated!');
     }
@@ -149,7 +150,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->route('roles.index')
+        return redirect()->route('auth.role.index')
             ->with('flash_message',
                 'Role deleted!');
     }

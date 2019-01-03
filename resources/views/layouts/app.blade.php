@@ -13,7 +13,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('fonts/css/font-awesome.min.css')}}">
+    <script type="text/javascript" src="{{asset('js/jquery-1.12.4.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/styles.js')}}"></script>
+
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--}}
 
     <!-- Scripts -->
     <script>
@@ -21,72 +27,72 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-    <script src="https://use.fontawesome.com/9712be8772.js"></script>
+    {{--<script src="https://use.fontawesome.com/9712be8772.js"></script>--}}
 </head>
-<body>
+<body style="overflow-x:hidden;">
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
+    {{--<nav class="navbar navbar-default navbar-static-top">--}}
+        {{--<div class="container">--}}
+            {{--<div class="navbar-header">--}}
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                {{--<!-- Collapsed Hamburger -->--}}
+                {{--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">--}}
+                    {{--<span class="sr-only">Toggle Navigation</span>--}}
+                    {{--<span class="icon-bar"></span>--}}
+                    {{--<span class="icon-bar"></span>--}}
+                    {{--<span class="icon-bar"></span>--}}
+                {{--</button>--}}
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
+                {{--<!-- Branding Image -->--}}
+                {{--<a class="navbar-brand" href="{{ url('/') }}">--}}
+                    {{--{{ config('app.name', 'Laravel') }}--}}
+                {{--</a>--}}
+            {{--</div>--}}
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- 导航条左边 -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    @if (!Auth::guest())
-                        <li><a href="{{ route('posts.create') }}">New Article</a></li>
-                    @endif
-                    @if (!Auth::guest())
-                        <li><a href="{{ route('users.index') }}">用户列表</a></li>
-                    @endif
-                </ul>
+            {{--<div class="collapse navbar-collapse" id="app-navbar-collapse">--}}
+                {{--<!-- 导航条左边 -->--}}
+                {{--<ul class="nav navbar-nav">--}}
+                    {{--<li><a href="{{ url('/') }}">Home</a></li>--}}
+                    {{--@if (!Auth::guest())--}}
+                        {{--<li><a href="{{ route('posts.create') }}">New Article</a></li>--}}
+                    {{--@endif--}}
+                    {{--@if (!Auth::guest())--}}
+                        {{--<li><a href="{{ route('users.index') }}">用户列表</a></li>--}}
+                    {{--@endif--}}
+                {{--</ul>--}}
 
-                <!-- 导航条右边 -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- 登录注册链接 -->
-                    @if (Auth::guest())
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
+                {{--<!-- 导航条右边 -->--}}
+                {{--<ul class="nav navbar-nav navbar-right">--}}
+                    {{--<!-- 登录注册链接 -->--}}
+                    {{--@if (Auth::guest())--}}
+                        {{--<li><a href="{{ route('login') }}">Login</a></li>--}}
+                        {{--<li><a href="{{ route('register') }}">Register</a></li>--}}
+                    {{--@else--}}
+                        {{--<li class="dropdown">--}}
+                            {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">--}}
+                                {{--{{ Auth::users()->name }} <span class="caret"></span>--}}
+                            {{--</a>--}}
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    @role('Admin') {{-- Laravel-permission blade 辅助函数 --}}
-                                    <a href="#"><i class="fa fa-btn fa-unlock"></i>Admin</a>
-                                    @endrole
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
+                            {{--<ul class="dropdown-menu" role="menu">--}}
+                                {{--<li>--}}
+                                    {{--@role('Admin') --}}{{-- Laravel-permission blade 辅助函数 --}}
+                                    {{--<a href="#"><i class="fa fa-btn fa-unlock"></i>Admin</a>--}}
+                                    {{--@endrole--}}
+                                    {{--<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">--}}
+                                        {{--Logout--}}
+                                    {{--</a>--}}
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
+                                    {{--<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+                                        {{--{{ csrf_field() }}--}}
+                                    {{--</form>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        {{--</li>--}}
+                    {{--@endif--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</nav>--}}
 
     @if(Session::has('flash_message'))
         <div class="container">

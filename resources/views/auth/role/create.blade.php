@@ -9,7 +9,7 @@
         <h1><i class='fa fa-key'></i> Add Role</h1>
         <hr>
 
-        {{ Form::open(array('url' => 'roles')) }}
+        {{ Form::open(array('route' => 'auth.role.store')) }}
 
         <div class="form-group">
             {{ Form::label('name', 'Name') }}

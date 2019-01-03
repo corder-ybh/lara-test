@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
@@ -9,6 +9,7 @@ use Auth;
 //引入laravel-permission模型
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Http\Controllers\Controller;
 
 use Session;
 
@@ -18,7 +19,7 @@ class PermissionController extends Controller
     public function __construct()
     {
         //isAdmin中间件让具备指定权限的用户才能访问该资源
-        $this->middleware(['auth', 'isAdmin']);
+        $this->middleware(['auth', 'clearance']);
     }
 
     /**
@@ -30,7 +31,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
 
-        return view('permissions.index')->with('permissions', $permissions);
+        return view('auth.permission.index')->with('permissions', $permissions);
     }
 
     /**
@@ -42,7 +43,7 @@ class PermissionController extends Controller
     {
         $roles = Role::get();
 
-        return view('permissions.create')->with('roles', $roles);
+        return view('auth.permission.create')->with('roles', $roles);
     }
 
     /**
@@ -54,7 +55,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name'=>'required|max:40|unique:permissions',
         ]);
 
         $name = $request['name'];
@@ -74,7 +75,7 @@ class PermissionController extends Controller
             }
         }
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('auth.permission.index')
             ->with('flash_message',
                 'Permission'. $permission->name.' added!');
     }
@@ -87,7 +88,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        return redirect('permissions');
+        return redirect('auth.permission.index');
     }
 
     /**
@@ -100,7 +101,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
 
-        return view('permissions.edit', compact('permission'));
+        return view('auth.permission.edit', compact('permission'));
     }
 
     /**
@@ -114,12 +115,12 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name'=>'required|max:40|unique:permissions,name,',
         ]);
         $input = $request->all();
         $permission->fill($input)->save();
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('auth.permission.index')
             ->with('flash_message',
                 'Permission'. $permission->name.' updated!');
     }
@@ -134,15 +135,15 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
 
-        if ($permission->name == "Administer roles & permissions") {
-            return redirect()->route('permissions.index')
+        if ($permission->name == "Administer") {
+            return redirect()->route('auth.permission.index')
                 ->with('flash_message',
                     'Cannot delete this Permission!');
         }
 
         $permission->delete();
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('auth.permission.index')
             ->with('flash_message',
                 'Permission deleted!');
     }

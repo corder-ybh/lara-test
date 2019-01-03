@@ -18,13 +18,14 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'PostController@index')->name('home');
+Route::get('/', 'IndexController@index')->name('index');
+Route::get('/info', 'IndexController@info')->name('info');
 
 //通过 resource 方法为该控制器注册一个资源路由
-Route::resource('posts', 'PostController');
-Route::resource('users', 'UserController');
-Route::resource('permissions', 'PermissionController');
-Route::resource('roles', 'RoleController');
+Route::resource('auth/post', 'PostController', array("as" => "auth"));
+Route::resource('auth/user', 'Auth\UserController', array("as" => "auth"));
+Route::resource('auth/permission', 'Auth\PermissionController', array("as" => "auth"));
+Route::resource('auth/role', 'Auth\RoleController', array("as" => "auth"));
 //资源控制器处理的动作
 //
 //请求方式	URI路径	控制器方法	路由名称

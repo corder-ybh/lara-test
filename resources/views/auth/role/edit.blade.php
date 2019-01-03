@@ -8,7 +8,7 @@
         <h1><i class='fa fa-key'></i> Edit Role: {{$role->name}}</h1>
         <hr>
 
-        {{ Form::model($role, array('route' => array('roles.update', $role->id), 'method' => 'PUT')) }}
+        {{ Form::model($role, array('route' => array('auth.role.update', $role->id), 'method' => 'PUT')) }}
 
         <div class="form-group">
             {{ Form::label('name', 'Role Name') }}

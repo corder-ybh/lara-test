@@ -7,7 +7,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use App\User;
+use App\Http\Models\Auth\User;
 
 class AdminMiddleware
 {
@@ -21,9 +21,10 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         $user = User::all()->count();
+        $action = $request->route()->getAction();
 
-        if (!$user == 1) {
-            if (!Auth::user()->hasPermissionTo('Administer roles & permissions')) {
+        if (!($user == 1)) {
+            if (!Auth::user()->hasPermissionTo('Administer')) {
                 abort('401');
             }
         }

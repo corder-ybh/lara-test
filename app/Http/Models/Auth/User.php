@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http\Models\Auth;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    protected $table = "fam_users";
     //调整User模型类，使用HasRole trait提供权限相关方法
     use HasRoles;
     use Notifiable;

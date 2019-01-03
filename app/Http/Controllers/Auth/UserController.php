@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 
-use App\User;
+use App\Http\Models\Auth\User;
 use Auth;
-
+use App\Http\Controllers\Controller;
 //引入laravel-permission模型
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -20,7 +20,7 @@ class UserController extends Controller
     public function __construct()
     {
         // isAdmin中间件让具备指定权限的用户才能访问该资源
-        $this->middleware(['auth', 'isAdmin']);
+        $this->middleware(['auth', 'clearance']);
     }
 
     /**
@@ -31,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index')->with('users', $users);
+        return view('auth.user.index')->with('users', $users);
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController extends Controller
         // 获取所有角色并将其传递到视图
         $roles = Role::get();
         //与compact()一样
-        return view('users.create', ['roles' => $roles]);
+        return view('auth.user.create', ['roles' => $roles]);
     }
 
     /**
@@ -58,7 +58,7 @@ class UserController extends Controller
         // 验证 name、email 和 password 字段
         $this->validate($request, [
             'name'=>'required|max:120',
-            'email'=>'required|email|unique:users',
+            'email'=>'required|email|unique:fam_users',
             'password'=>'required|min:6|confirmed'
         ]);
 
@@ -69,11 +69,11 @@ class UserController extends Controller
         if (isset($roles)) {
             foreach ($roles as $role) {
                 $role_r = Role::where('id', '=', $role)->firstOrFail();
-                $user->assignRole($role_r); //Assigning role to user
+                $user->assignRole($role_r); //Assigning roles to user
             }
         }
-        // 重定向到 users.index 视图并显示消息
-        return redirect()->route('users.index')
+        // 重定向到 user.index 视图并显示消息
+        return redirect()->route('auth.user.index')
             ->with('flash_message',
                 'User successfully added.');
     }
@@ -86,7 +86,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return redirect('users');
+        return redirect('user');
     }
 
     /**
@@ -100,7 +100,7 @@ class UserController extends Controller
         $user = User::findOrFail($id); // 通过给定id获取用户
         $roles = Role::get(); // 获取所有角色
 
-        return view('users.edit', compact('user', 'roles')); // 将用户和角色数据传递到视图
+        return view('auth.user.edit', compact('user', 'roles')); // 将用户和角色数据传递到视图
     }
 
     /**
@@ -117,7 +117,7 @@ class UserController extends Controller
         // 验证 name, email 和 password 字段
         $this->validate($request, [
             'name'=>'required|max:120',
-            'email'=>'required|email|unique:users,email,'.$id,
+            'email'=>'required|email|unique:fam_users,email,'.$id,
             'password'=>'required|min:6|confirmed'
         ]);
         $input = $request->only(['name', 'email', 'password']); // 获取 name, email 和 password 字段
@@ -129,7 +129,7 @@ class UserController extends Controller
         } else {
             $user->roles()->detach(); // 如果没有选择任何与用户关联的角色则将之前关联角色解除
         }
-        return redirect()->route('users.index')
+        return redirect()->route('auth.user.index')
             ->with('flash_message',
                 'User successfully edited.');
     }
@@ -145,7 +145,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')
+        return redirect()->route('auth.user.index')
             ->with('flash_message',
                 'User successfully deleted.');
     }

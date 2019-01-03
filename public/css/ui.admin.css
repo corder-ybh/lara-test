@@ -135,22 +135,22 @@ select option {
     vertical-align: middle
 }
 
-/*input[type='submit'], input[type='button'] {*/
-    /*padding: 0 25px;*/
-    /*height: 25px;*/
-    /*vertical-align: middle;*/
-    /*margin-right: 10px;*/
-    /*color: #fff;*/
-    /*letter-spacing: 2px;*/
-    /*border-radius: 3px;*/
-    /*background: #337ab7;*/
-    /*border: 1px solid #286090;*/
-    /*cursor: pointer*/
-/*}*/
+input[type='submit'], input[type='button'] {
+    padding: 0 25px;
+    height: 25px;
+    vertical-align: middle;
+    margin-right: 10px;
+    color: #fff;
+    letter-spacing: 2px;
+    border-radius: 3px;
+    background: #337ab7;
+    border: 1px solid #286090;
+    cursor: pointer
+}
 
-/*input[type='submit']:hover, input[type='button']:hover {*/
-    /*background: #286090*/
-/*}*/
+input[type='submit']:hover, input[type='button']:hover {
+    background: #286090
+}
 
 input[type='button'].back {
     background: #f0f0f0;
