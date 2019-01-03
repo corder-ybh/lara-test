@@ -22,7 +22,7 @@
         ]) !!};
     </script>
 </head>
-<body>
+<body style="background-color: #eee">
 <div id="app">
     {{--<nav class="navbar navbar-default navbar-static-top">--}}
     {{--<div class="container">--}}
@@ -106,7 +106,7 @@
                 @csrf
 
                 <div class="form-group row">
-                    <label for="email" style="width: 10%;height: 34px" class="col-md-4 col-form-label text-md-right">账&nbsp;&nbsp;户：</label>
+                    <label for="email" style="width: 10%;height: 34px" class="col-md-4 col-form-label text-md-right">邮&nbsp;&nbsp;箱：</label>
 
                     <div class="col-md-6">
                         <input id="email" type="email"
